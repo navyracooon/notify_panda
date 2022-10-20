@@ -99,7 +99,7 @@ class PandaParser:
 
             # !! TEMP !! #
             # THIS WILL BE REMOVED BY CREATING "UserManager.py"
-            load_dotenv("ParsePanda/.env")
+            load_dotenv(".env")
             username = os.environ.get("USERNAME")
             password = os.environ.get("PASSWORD")
 

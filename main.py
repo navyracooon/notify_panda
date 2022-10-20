@@ -7,7 +7,8 @@ from CheckUpcomingAssignments import CheckUpcomingAssignments
 from FormatMessage import FormatAssignments
 from ParsePanda.PandaParser import PandaParser
 
-load_dotenv(".env")
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+
 ACCESS_TOKEN = os.environ.get("ACCESS_TOKEN")
 
 def main():

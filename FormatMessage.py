@@ -13,7 +13,7 @@ class FormatAssignments:
             output += (f"タイトル：{assignment.title}\n"
                     f"期日：{assignment.dueTime.strftime('%m月%d日%H時%M分')}\n"
                     f"説明：{assignment.instructions}\n"
-                    f"リンク：{assignment.entityURL}\n"
+                    f"リンク：https://panda.ecs.kyoto-u.ac.jp/portal/site/{assignment.context}\n"
                     "\n")
         output = output.rstrip("\n")
         return output
