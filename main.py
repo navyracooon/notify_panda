@@ -39,7 +39,9 @@ def main():
 
 if __name__ == "__main__":
     main()
-    print("Message sent successfully!")
+    DEBUG = 1 if os.environ.get("DEBUG") == "" else int(os.environ.get("DEBUG"))
+    if DEBUG:
+        print("Message sent successfully!")
 
 
 
