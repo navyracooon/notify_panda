@@ -4,6 +4,7 @@ from typing import Tuple
 
 from ParsePanda.Attachment import Attachment
 
+
 @dataclass(frozen=True)
 class Assignment:
     access: str
@@ -48,6 +49,3 @@ class Assignment:
     entityURL: str
     entityId: str
     entityTitle: str
-
-
-
