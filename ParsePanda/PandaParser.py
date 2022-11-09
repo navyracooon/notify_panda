@@ -1,17 +1,17 @@
 import datetime
-import os
+from typing import Dict, List
 
 from bs4 import BeautifulSoup
-from dotenv import load_dotenv
 import requests
-from typing import Dict, List
 
 from ParsePanda.Attachment import Attachment
 from ParsePanda.Assignment import Assignment
+from ParsePanda.User import User
 
 
 class PandaParser:
     __logged_in = False
+    __user = None
     __session = requests.session()
 
     @staticmethod
@@ -100,11 +100,11 @@ class PandaParser:
                     "sakai-login-tool%2Fcontainer"
                     )
 
-            # !! TEMP !! #
-            # THIS WILL BE REMOVED BY CREATING "UserManager.py"
-            load_dotenv(".env")
-            username = os.environ.get("USERNAME")
-            password = os.environ.get("PASSWORD")
+            try:
+                username = PandaParser.__user.username
+                password = PandaParser.__user.password
+            except AttributeError:
+                raise ValueError("'__user' has not been set properly")
 
             bf = PandaParser.__session.get(login_url)
             soup = BeautifulSoup(bf.text, "html.parser")
@@ -129,6 +129,10 @@ class PandaParser:
                     )
 
             PandaParser.__logged_in = True
+
+    @staticmethod
+    def set_user(user: User) -> None:
+        PandaParser.__user = user
 
 
 if __name__ == "__main__":

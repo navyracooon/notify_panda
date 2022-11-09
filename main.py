@@ -1,18 +1,16 @@
 import os
 
-from dotenv import load_dotenv
 import requests
 
 from NotifyPanda.CheckUpcomingAssignments import CheckUpcomingAssignments
 from NotifyPanda.FormatMessage import FormatAssignments
+from NotifyPanda.UserManager import UserManager
 from ParsePanda.PandaParser import PandaParser
-
-load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
-
-ACCESS_TOKEN = os.environ.get("ACCESS_TOKEN")
+from ParsePanda.User import User
 
 
-def main():
+def main(user: User):
+    PandaParser.set_user(user)
     assignment_list = PandaParser.parse_all_assignment_info()
 
     week_upcoming, day_upcoming, hour_upcoming \
@@ -35,14 +33,16 @@ def main():
         if len(uc) == 0:
             continue
         requests.post(line_api_url,
-                      headers={"Authorization": f"Bearer {ACCESS_TOKEN}"},
+                      headers={"Authorization": f"Bearer {user.access_token}"},
                       data={"message": f"{upcoming[uc]}\n{uc}"}
                       )
 
 
 if __name__ == "__main__":
-    main()
-    DEBUG = True if os.environ.get("DEBUG") == "" or "True" else (
-            False if os.environ.get("DEBUG") == "False" else True)
+    UserManager.generate_userlist()
+    for user in UserManager.get_userlist():
+        main(user)
+
+    DEBUG = False if os.environ.get("DEBUG") == "False" else True
     if DEBUG:
         print("Message sent successfully!")
