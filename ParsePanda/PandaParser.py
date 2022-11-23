@@ -4,9 +4,9 @@ from typing import Dict, List
 from bs4 import BeautifulSoup
 import requests
 
-from ParsePanda.Attachment import Attachment
-from ParsePanda.Assignment import Assignment
-from ParsePanda.User import User
+from .Attachment import Attachment
+from .Assignment import Assignment
+from .User import User
 
 
 class PandaParser:

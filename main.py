@@ -23,20 +23,34 @@ def main(user: User):
                 )
 
     upcoming = {
-            week_upcoming: "〆切まで1週間以内\n",
-            day_upcoming: "【緊急】〆切まで24時間以内\n",
-            hour_upcoming: "【大至急】〆切まで1時間以内\n",
+            " 1週間以内": week_upcoming,
+            " 24時間以内": day_upcoming,
+            " 1時間以内": hour_upcoming,
             }
 
     line_api_url = "https://notify-api.line.me/api/notify"
 
-    for uc in upcoming.keys():
-        if len(uc) == 0:
+    for title, outputs in upcoming.items():
+        if len(outputs) == 0:
             continue
-        requests.post(line_api_url,
-                      headers={"Authorization": f"Bearer {user.access_token}"},
-                      data={"message": f"{upcoming[uc]}\n{uc}"}
-                      )
+        for index, output in enumerate(outputs):
+            if index == 0:
+                requests.post(
+                    line_api_url,
+                    headers={"Authorization": f"Bearer {user.access_token}"},
+                    data={"message": f"\n⎯⎯⎯⎯ {title}⎯⎯⎯⎯⎯"}
+                    )
+            requests.post(
+                line_api_url,
+                headers={"Authorization": f"Bearer {user.access_token}"},
+                data={"message": f"\n{output}"}
+                )
+            if index == len(outputs) - 1:
+                requests.post(
+                    line_api_url,
+                    headers={"Authorization": f"Bearer {user.access_token}"},
+                    data={"message": f"\n⎯⎯⎯⎯ {title}⎯⎯⎯⎯⎯"}
+                    )
 
 
 if __name__ == "__main__":
