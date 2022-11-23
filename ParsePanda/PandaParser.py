@@ -131,6 +131,11 @@ class PandaParser:
             PandaParser.__logged_in = True
 
     @staticmethod
+    def logout_panda() -> None:
+        PandaParser.__logged_in = False
+        PandaParser.__session = requests.session()
+
+    @staticmethod
     def set_user(user: User) -> None:
         PandaParser.__user = user
 

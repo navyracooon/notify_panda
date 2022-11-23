@@ -12,6 +12,7 @@ from ParsePanda.User import User
 def main(user: User):
     PandaParser.set_user(user)
     assignment_list = PandaParser.parse_all_assignment_info()
+    PandaParser.logout_panda()
 
     week_upcoming, day_upcoming, hour_upcoming \
         = CheckUpcomingAssignments.get_three_major_less_than(assignment_list)
